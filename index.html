@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Age Eligibility Check</title>
+	<link rel="stylesheet" href="Voting.css">
+</head>
+<body>
+	<div class="blob one" aria-hidden="true"></div>
+	<div class="blob two" aria-hidden="true"></div>
+	<div class="blob three" aria-hidden="true"></div>
+
+	<div class="toolbar" role="group" aria-label="Display options">
+		<select id="langSelect" aria-label="Language">
+			<option value="en">EN</option>
+			<option value="fr">FR</option>
+			<option value="es">ES</option>
+		</select>
+		<button id="themeToggle" type="button" aria-label="Toggle dark mode">🌙</button>
+		<button id="contrastToggle" type="button" aria-label="Toggle high contrast">◐</button>
+		<button id="soundToggle" type="button" aria-label="Toggle sound">🔊</button>
+	</div>
+
+	<div class="stage">
+		<aside class="side-figure adult" aria-hidden="true">			<svg viewBox="0 0 120 160">
+				<circle cx="60" cy="26" r="16" fill="#1e3a8a"/>
+				<path d="M60 44c-18 0-28 10-28 24v34h10v46c0 4 3 8 8 8h4V102h12v54h4c5 0 8-4 8-8v-46h10V68c0-14-10-24-28-24z" fill="#1e3a8a"/>
+			</svg>
+			<span class="badge">18+</span>
+			<span class="caption" data-i18n="adultCaption">Adult — eligible</span>
+		</aside>
+
+		<div class="column">
+		<main>
+			<ol class="steps" aria-label="Progress">
+				<li data-step="1" class="active"><span class="dot">1</span><span data-i18n="step1">Age</span></li>
+				<li data-step="2"><span class="dot">2</span><span data-i18n="step2">Human check</span></li>
+				<li data-step="3"><span class="dot">3</span><span data-i18n="step3">Details</span></li>
+			</ol>
+
+			<div id="hazard" class="hazard" aria-hidden="true" hidden>⚠️</div>
+			<h1 data-i18n="appTitle">Age Eligibility Check</h1>
+			<label for="birthDate" data-i18n="dobLabel">Date of birth</label>
+			<input id="birthDate" type="date" required>
+			<button id="checkButton" type="button" data-i18n="checkBtn">Check</button>
+			<div id="result" aria-live="polite"></div>
+			<p id="funFact" aria-live="polite"></p>
+			<p id="ticker" aria-live="off"></p>
+
+			<section id="verification" aria-label="Verification" hidden>
+				<button id="eligibilityNext" type="button" data-i18n="nextBtn">Next</button>
+				<div id="robotStep" hidden>
+					<p class="captcha-title">🛡️ <span data-i18n="captchaTitle">Security check — prove you're human</span></p>
+					<div id="captchaChallenge"></div>
+					<p id="captchaStatus" aria-live="polite"></p>
+					<div class="captcha-actions">
+						<button id="refreshCaptcha" type="button" title="New challenge" aria-label="New challenge">↻</button>
+						<button id="verificationNext" type="button" disabled data-i18n="nextBtn">Next</button>
+					</div>
+				</div>
+			</section>
+
+			<section id="information" aria-labelledby="informationHeading" hidden>
+				<h2 id="informationHeading" data-i18n="infoHeading">Establishing your eligibility for adult-classified responsibilities</h2>
+				<p data-i18n="infoP1">Establishing your eligibility for adult-classified responsibilities requires a professional presentation focused on legal compliance, identity verification, and operational readiness. When communicating your qualifications to an online platform or client, leading with a structured overview builds immediate trust. A strong introduction ensures that the recipient recognizes your commitment to safety, policy adherence, and professional standards right from the start.</p>
+				<p data-i18n="infoP2">First, you must address the primary legal threshold by explicitly stating your legal age and verification status. Confirm clearly that you are 18 years of age or older (or the required legal age in your jurisdiction) and possess valid, government-issued identification to prove it. Mentioning your willingness to complete standard background checks or official platform verification immediately establishes your legitimacy.</p>
+				<p data-i18n="infoP3">Second, highlight your professional competence and experience handling sensitive or age-restricted material. Discuss your technical proficiency, your deep understanding of digital privacy laws, and your track record of managing confidential data responsibly. This section demonstrates that you possess the practical skills required to execute the tasks successfully.</p>
+				<p data-i18n="infoP4">Finally, reinforce your strict adherence to safety protocols, consent boundaries, and website guidelines. Conclude by stating your commitment to maintaining a secure environment and following the platform's terms of service without exception. This final point assures the recipient that you prioritize risk management and professional ethics in all your interactions.</p>
+				<label for="certName" data-i18n="nameLabel">Name (optional, for your certificate)</label>
+				<input id="certName" type="text" data-i18n-ph="namePlaceholder" placeholder="e.g. Jane Doe" autocomplete="name">
+				<button id="certButton" type="button">🖨️ <span data-i18n="certBtn">Download certificate</span></button>
+				<button id="exitButton" type="button" data-i18n="exitBtn">Exit</button>
+			</section>
+		</main>
+
+		<section id="reviews" aria-labelledby="reviewsHeading">
+			<h2 id="reviewsHeading">📋 <span data-i18n="reviewsTitle">Completion reviews</span> <span id="reviewCount" class="count-badge">0</span></h2>
+			<div class="review-form">
+				<input id="reviewName" type="text" data-i18n-ph="yourName" placeholder="Your name" autocomplete="name">
+				<input id="reviewRating" type="number" min="1" max="10" step="1" data-i18n-ph="ratingPlaceholder" placeholder="Rating (1–10)">
+				<button id="addReview" type="button" data-i18n="addReview">Add review</button>
+			</div>
+			<ul id="reviewList"></ul>
+			<p id="noReviews" data-i18n="noReviews">No reviews yet.</p>
+		</section>
+		</div>
+
+		<aside class="side-figure child" aria-hidden="true">
+			<svg viewBox="0 0 120 160">
+				<circle cx="60" cy="34" r="13" fill="#b45309"/>
+				<path d="M60 49c-14 0-22 8-22 20v26h8v38c0 3 2.5 6 6 6h4V95h8v44h4c3.5 0 6-3 6-6V95h8V69c0-12-8-20-22-20z" fill="#b45309"/>
+			</svg>
+			<span class="badge">&lt;18</span>
+			<span class="caption" data-i18n="childCaption">Child — not eligible</span>
+		</aside>
+	</div>
+
+	<div class="certificate-wrap" aria-hidden="true">
+		<div class="certificate">
+			<div class="cert-border">
+				<h1 data-i18n="certTitle">Certificate of Age Eligibility</h1>
+				<p class="present" data-i18n="certPresented">This certificate is proudly presented to</p>
+				<p class="cert-name" id="certNameOut">—</p>
+				<p><span data-i18n="certDob">Date of birth</span>: <strong id="certDobOut"></strong></p>
+				<p><span data-i18n="certAge">Age</span>: <strong id="certAgeOut"></strong></p>
+				<p><span data-i18n="certTier">Clearance tier</span>: <strong id="certTierOut"></strong></p>
+				<p class="issued"><span data-i18n="certIssued">Issued on</span> <span id="certDateOut"></span></p>
+				<div class="sign-line"><span></span><em data-i18n="certSign">Authorized signature</em></div>
+			</div>
+		</div>
+	</div>
+
+	<script src="Voting.js"></script>
+</body>
+</html>
